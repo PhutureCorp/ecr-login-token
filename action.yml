@@ -5,7 +5,9 @@ author: 'docker'
 branding:
   icon: 'anchor'
   color: 'blue'
-
+outputs:
+  token:
+    description: Short lived password for accessing the the registry.
 inputs:
   registry:
     description: 'Server address of Docker registry. If not set then will default to Docker Hub'
