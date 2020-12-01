@@ -14,17 +14,30 @@ export async function run(): Promise<void> {
 
     const creds = new Credentials({
       accessKeyId: username,
-      secretAccessKey: password,
+      secretAccessKey: password
     });
- 
+
     AWS.config.credentials = creds;
     AWS.config.region = await getRegion(registry);
 
     var ecr = new ECR();
-    var token = await ecr.getAuthorizationToken({}).promise();
+    core.info(`🔑 Getting Reps....`);
+    var repoInfo = await ecr.describeRepositories().promise();
+    var repos = repoInfo.repositories;
+    var registryId;
+    if (repos) {
+      repos.forEach(repo => {
+        core.info(`...Repo:${repo.registryId} - ${repo.repositoryName}`);
+        if (repo.repositoryName === registry) {
+          registryId = repo.registryId;
+          core.info(`Repo Match Found`);
+        }
+      });
+    }
+    core.info(`🔑 Getting Token...`);
+    var token = await ecr.getAuthorizationToken(registryId ? {registryIds: [registryId]} : {}).promise();
     var data = token.authorizationData;
     if (data) {
-      core.info(`🔑 Getting Token...`)
       core.setOutput('token', data[0].authorizationToken);
     }
     return;
