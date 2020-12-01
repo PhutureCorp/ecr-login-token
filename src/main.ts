@@ -1,16 +1,13 @@
-import * as os from 'os';
+//import * as os from 'os';
 import * as core from '@actions/core';
 import {getInputs, Inputs} from './context';
-import * as docker from './docker';
+//import * as docker from './docker';
 import * as stateHelper from './state-helper';
 import AWS, {ECR, Config, Credentials} from 'aws-sdk';
 
 export async function run(): Promise<void> {
   try {
-    if (os.platform() !== 'linux') {
-      throw new Error('Only supported on linux platform');
-    }
-
+ 
     const {registry, username, password, logout} = getInputs();
 
     const creds = new Credentials({
@@ -20,21 +17,6 @@ export async function run(): Promise<void> {
     const region = await getRegion(registry);
 
     var ecr = new ECR({credentials: creds, region: region});
-
-    // core.info(`🔑 Getting Reps....`);
-    // var repoInfo = await ecr.describeRepositories().promise();
-    // var repos = repoInfo.repositories;
-    // var registryId;
-    // if (repos) {
-    //   repos.forEach(repo => {
-    //     core.info(`...Repo:${repo.registryId} - ${repo.repositoryName}`);
-    //     registryId = repo.registryId;
-    //     if (repo.repositoryName === registry) {
-    //       registryId = repo.registryId;
-    //       core.info(`Repo Match Found`);
-    //     }
-    //   });
-    // }
 
     core.info(`🔑 Getting Token...`);
     var token = await ecr.getAuthorizationToken({}).promise();
@@ -46,10 +28,8 @@ export async function run(): Promise<void> {
       core.setOutput('token', token);
     }
 
-    //return;
-    //stateHelper.setRegistry(registry);
-    //stateHelper.setLogout(logout);
-    //await docker.login(registry, username, password);
+    stateHelper.setRegistry(registry);
+    stateHelper.setLogout(logout);
 
   } catch (error) {
     core.setFailed(error.message);
@@ -61,10 +41,6 @@ export const getRegion = async (registry: string): Promise<string> => {
 };
 
 async function logout(): Promise<void> {
-  if (!stateHelper.logout) {
-    return;
-  }
-  await docker.logout(stateHelper.registry);
 }
 
 if (!stateHelper.IsPost) {

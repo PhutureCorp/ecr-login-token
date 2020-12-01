@@ -1,7 +1,7 @@
 # https://help.github.com/en/articles/metadata-syntax-for-github-actions
-name: 'Docker Login'
-description: 'GitHub Action to login against a Docker registry'
-author: 'docker'
+name: 'ECR Login'
+description: 'GitHub Action to get ecr login via aws-sdk for node'
+author: 'PhutureCorp'
 branding:
   icon: 'anchor'
   color: 'blue'
@@ -18,12 +18,7 @@ inputs:
   password:
     description: 'Password or personal access token used to log against the Docker registry'
     required: false
-  logout:
-    description: 'Log out from the Docker registry at the end of a job'
-    default: 'true'
-    required: false
 
 runs:
   using: 'node12'
   main: 'dist/index.js'
-  post: 'dist/index.js'
