@@ -1,5 +1,6 @@
 import * as semver from 'semver';
 import * as io from '@actions/io';
+import * as core from '@actions/core';
 import * as execm from './exec';
 
 export const isECR = async (registry: string): Promise<boolean> => {
