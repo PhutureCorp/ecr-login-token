@@ -16,11 +16,10 @@ export async function run(): Promise<void> {
       accessKeyId: username,
       secretAccessKey: password
     });
+    const region = await getRegion(registry);
 
-    AWS.config.credentials = creds;
-    AWS.config.region = await getRegion(registry);
+    var ecr = new ECR({credentials: creds, region: region});
 
-    var ecr = new ECR();
     core.info(`🔑 Getting Reps....`);
     var repoInfo = await ecr.describeRepositories().promise();
     var repos = repoInfo.repositories;
@@ -35,6 +34,7 @@ export async function run(): Promise<void> {
         }
       });
     }
+
     core.info(`🔑 Getting Token...`);
     var token = await ecr.getAuthorizationToken(registryId ? {registryIds: [registryId]} : {}).promise();
     var data = token.authorizationData;
@@ -44,14 +44,14 @@ export async function run(): Promise<void> {
       data.forEach(da => {
         core.info(`🔑 Token...`);
         core.info(`${da.proxyEndpoint} - ${da.authorizationToken}`);
+        core.info(`🔑 Setting Token...`);
+        core.setOutput('token', da.authorizationToken);
       });
-
-      core.setOutput('token', data[0].authorizationToken);
     }
-    return;
-    stateHelper.setRegistry(registry);
-    stateHelper.setLogout(logout);
-    await docker.login(registry, username, password);
+    //return;
+    //stateHelper.setRegistry(registry);
+    //stateHelper.setLogout(logout);
+    //await docker.login(registry, username, password);
   } catch (error) {
     core.setFailed(error.message);
   }
