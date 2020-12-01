@@ -21,7 +21,7 @@ export async function run(): Promise<void> {
     AWS.config.region = await getRegion(registry);
 
     var ecr = new ECR();
-    var token = await ecr.getAuthorizationToken({registryIds: [registry]}).promise();
+    var token = await ecr.getAuthorizationToken({}).promise();
     var data = token.authorizationData;
     if (data) {
       core.info(`🔑 Getting Token...`)
