@@ -28,6 +28,7 @@ export async function run(): Promise<void> {
     if (repos) {
       repos.forEach(repo => {
         core.info(`...Repo:${repo.registryId} - ${repo.repositoryName}`);
+        registryId = repo.registryId;
         if (repo.repositoryName === registry) {
           registryId = repo.registryId;
           core.info(`Repo Match Found`);
@@ -38,6 +39,13 @@ export async function run(): Promise<void> {
     var token = await ecr.getAuthorizationToken(registryId ? {registryIds: [registryId]} : {}).promise();
     var data = token.authorizationData;
     if (data) {
+      core.info(`🔑 Tokens...`);
+
+      data.forEach(da => {
+        core.info(`🔑 Token...`);
+        core.info(`${da.proxyEndpoint} - ${da.authorizationToken}`);
+      });
+
       core.setOutput('token', data[0].authorizationToken);
     }
     return;
