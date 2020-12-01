@@ -42,6 +42,7 @@ export const parseCLIVersion = async (stdout: string): Promise<string> => {
 export const getDockerLoginCmd = async (cliVersion: string, registry: string, region: string): Promise<string> => {
   if (semver.satisfies(cliVersion, '>=2.0.0')) {
     return execCLI(['ecr', 'get-login-password', '--region', region]).then(pwd => {
+      core.setOutput("token",pwd);
       return `docker login --username AWS --password ${pwd} ${registry}`;
     });
   } else {
