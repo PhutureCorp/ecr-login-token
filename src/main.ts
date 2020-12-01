@@ -14,9 +14,11 @@ export async function run(): Promise<void> {
 
     const creds = new Credentials({
       accessKeyId: username,
-      secretAccessKey: password
+      secretAccessKey: password,
     });
+ 
     AWS.config.credentials = creds;
+    AWS.config.region = await getRegion(registry);
 
     var ecr = new ECR();
     var token = await ecr.getAuthorizationToken({registryIds: [registry]}).promise();
@@ -33,6 +35,10 @@ export async function run(): Promise<void> {
     core.setFailed(error.message);
   }
 }
+
+export const getRegion = async (registry: string): Promise<string> => {
+  return registry.substring(registry.indexOf('ecr.') + 4, registry.indexOf('.amazonaws'));
+};
 
 async function logout(): Promise<void> {
   if (!stateHelper.logout) {
