@@ -4,6 +4,7 @@ import {getInputs, Inputs} from './context';
 import * as docker from './docker';
 import * as stateHelper from './state-helper';
 import AWS, {ECR, Config, Credentials} from 'aws-sdk';
+
 export async function run(): Promise<void> {
   try {
     if (os.platform() !== 'linux') {
@@ -20,38 +21,36 @@ export async function run(): Promise<void> {
 
     var ecr = new ECR({credentials: creds, region: region});
 
-    core.info(`🔑 Getting Reps....`);
-    var repoInfo = await ecr.describeRepositories().promise();
-    var repos = repoInfo.repositories;
-    var registryId;
-    if (repos) {
-      repos.forEach(repo => {
-        core.info(`...Repo:${repo.registryId} - ${repo.repositoryName}`);
-        registryId = repo.registryId;
-        if (repo.repositoryName === registry) {
-          registryId = repo.registryId;
-          core.info(`Repo Match Found`);
-        }
-      });
-    }
+    // core.info(`🔑 Getting Reps....`);
+    // var repoInfo = await ecr.describeRepositories().promise();
+    // var repos = repoInfo.repositories;
+    // var registryId;
+    // if (repos) {
+    //   repos.forEach(repo => {
+    //     core.info(`...Repo:${repo.registryId} - ${repo.repositoryName}`);
+    //     registryId = repo.registryId;
+    //     if (repo.repositoryName === registry) {
+    //       registryId = repo.registryId;
+    //       core.info(`Repo Match Found`);
+    //     }
+    //   });
+    // }
 
     core.info(`🔑 Getting Token...`);
-    var token = await ecr.getAuthorizationToken(registryId ? {registryIds: [registryId]} : {}).promise();
+    var token = await ecr.getAuthorizationToken({}).promise();
     var data = token.authorizationData;
     if (data) {
-      core.info(`🔑 Tokens...`);
-
-      data.forEach(da => {
-        core.info(`🔑 Token...`);
-        core.info(`${da.proxyEndpoint} - ${da.authorizationToken}`);
-        core.info(`🔑 Setting Token...`);
-        core.setOutput('token', da.authorizationToken);
-      });
+      const tokenData = data[0].authorizationToken as string;
+      let buff = Buffer.from(tokenData, 'base64');
+      let token = buff.toString('ascii').split(':')[1];
+      core.setOutput('token', token);
     }
+
     //return;
     //stateHelper.setRegistry(registry);
     //stateHelper.setLogout(logout);
     //await docker.login(registry, username, password);
+
   } catch (error) {
     core.setFailed(error.message);
   }
