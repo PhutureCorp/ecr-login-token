@@ -3,7 +3,7 @@ name: 'ECR Login Token'
 description: 'GitHub Action to get ecr login via aws-sdk for node'
 author: 'PhutureCorp'
 branding:
-  icon: 'key'
+  icon: 'lock'
   color: 'blue'
 outputs:
   token:
