@@ -17,16 +17,19 @@ export async function run(): Promise<void> {
     });
     const region = await getRegion(registry);
 
-    var sts = new STS({credentials: creds, region: region});
+    if (arn !== '') {
 
-    var _newCreds = await sts.assumeRole({RoleArn: arn, RoleSessionName: 'AssumeRoleECR'}).promise();
+      var sts = new STS({credentials: creds, region: region});
 
-    if (arn != '' && _newCreds && _newCreds.Credentials) {
-      info(`🔑 Assuming New Role ${_newCreds.AssumedRoleUser?.Arn}...`);
-      creds = new Credentials({
-        accessKeyId: _newCreds.Credentials.AccessKeyId,
-        secretAccessKey: _newCreds.Credentials.SecretAccessKey
-      });
+      var _newCreds = await sts.assumeRole({RoleArn: arn, RoleSessionName: 'AssumeRoleECR'}).promise();
+
+      if (arn != '' && _newCreds && _newCreds.Credentials) {
+        info(`🔑 Assuming New Role ${_newCreds.AssumedRoleUser?.Arn}...`);
+        creds = new Credentials({
+          accessKeyId: _newCreds.Credentials.AccessKeyId,
+          secretAccessKey: _newCreds.Credentials.SecretAccessKey
+        });
+      }
     }
 
     var ecr = new ECR({credentials: creds, region: region});
