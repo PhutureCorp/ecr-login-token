@@ -21,6 +21,7 @@ export async function run(): Promise<void> {
 
     var _newCreds = await sts.assumeRole({RoleArn: arn, RoleSessionName: 'AssumeRoleECR'}).promise();
 
+    info(`🔑 Assuming New Role ${_newCreds.AssumedRoleUser?.Arn}...`);
     if (arn != '' && _newCreds && _newCreds.Credentials) {
       info(`🔑 Assuming New Role ${_newCreds.AssumedRoleUser?.Arn}...`);
       creds = new Credentials({
