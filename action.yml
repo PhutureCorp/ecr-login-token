@@ -1,5 +1,5 @@
 # https://help.github.com/en/articles/metadata-syntax-for-github-actions
-name: 'ECR Login'
+name: 'ECR Login Token'
 description: 'GitHub Action to get ecr login via aws-sdk for node'
 author: 'PhutureCorp'
 branding:
