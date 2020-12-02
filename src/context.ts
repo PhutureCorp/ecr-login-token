@@ -4,7 +4,7 @@ export interface Inputs {
   registry: string;
   username: string;
   password: string;
-  logout: string;
+  arn: string;
 }
 
 export function getInputs(): Inputs {
@@ -12,6 +12,6 @@ export function getInputs(): Inputs {
     registry: getInput('registry'),
     username: getInput('username'),
     password: getInput('password'),
-    logout: getInput('logout')
+    arn: getInput('arn')
   };
 }

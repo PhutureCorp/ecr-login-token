@@ -1,21 +1,32 @@
 //import * as os from 'os';
-import { setFailed, info, setOutput } from '@actions/core';
+import {setFailed, info, setOutput} from '@actions/core';
 import {getInputs, Inputs} from './context';
 //import * as docker from './docker';
 import * as stateHelper from './state-helper';
 import ECR from 'aws-sdk/clients/ecr';
-import { Credentials } from 'aws-sdk';
+import STS from 'aws-sdk/clients/sts';
+import {Credentials} from 'aws-sdk';
 
 export async function run(): Promise<void> {
   try {
- 
-    const {registry, username, password, logout} = getInputs();
+    const {registry, username, password, arn} = getInputs();
 
-    const creds = new Credentials({
+    let creds = new Credentials({
       accessKeyId: username,
       secretAccessKey: password
     });
     const region = await getRegion(registry);
+
+    var sts = new STS({credentials: creds, region: region});
+
+    var _newCreds = await sts.assumeRole({RoleArn: arn, RoleSessionName: 'AssumeRoleECR'}).promise();
+
+    if (arn != '' && _newCreds && _newCreds.Credentials) {
+      creds = new Credentials({
+        accessKeyId: _newCreds.Credentials.AccessKeyId,
+        secretAccessKey: _newCreds.Credentials.SecretAccessKey
+      });
+    }
 
     var ecr = new ECR({credentials: creds, region: region});
 
@@ -30,8 +41,7 @@ export async function run(): Promise<void> {
     }
 
     stateHelper.setRegistry(registry);
-    stateHelper.setLogout(logout);
-
+    //stateHelper.setLogout(logout);
   } catch (error) {
     setFailed(error.message);
   }
@@ -41,8 +51,7 @@ export const getRegion = async (registry: string): Promise<string> => {
   return registry.substring(registry.indexOf('ecr.') + 4, registry.indexOf('.amazonaws'));
 };
 
-async function logout(): Promise<void> {
-}
+async function logout(): Promise<void> {}
 
 if (!stateHelper.IsPost) {
   run();
