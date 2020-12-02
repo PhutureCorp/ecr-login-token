@@ -1,10 +1,10 @@
 //import * as os from 'os';
-import { setFailed, info, setOutput } from '@actions/core/lib/core';
+import { setFailed, info, setOutput } from '@actions/core';
 import {getInputs, Inputs} from './context';
 //import * as docker from './docker';
 import * as stateHelper from './state-helper';
 import ECR from 'aws-sdk/clients/ecr';
-import { Credentials } from 'aws-sdk/lib/credentials';
+import { Credentials } from 'aws-sdk';
 
 export async function run(): Promise<void> {
   try {

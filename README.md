@@ -38,7 +38,7 @@ jobs:
     steps:
       -
         name: Login to ECR
-        uses: PhutureCorp/ecr-login-token@v0.6.0
+        uses: PhutureCorp/ecr-login-token-action@v0.7.0
         with:
           registry: <aws-account-number>.dkr.ecr.<region>.amazonaws.com
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
