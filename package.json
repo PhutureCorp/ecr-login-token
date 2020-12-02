@@ -1,6 +1,6 @@
 {
-  "name": "docker-login",
-  "description": "GitHub Action to login against a Docker registry",
+  "name": "ecr-login-token",
+  "description": "GitHub Action to get ecr token for Docker containers hosted at Amazon ECR",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc && ncc build",
@@ -11,18 +11,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/docker/login-action.git"
+    "url": "git+https://github.com/PhutureCorp/ecr-login-token.git"
   },
   "keywords": [
     "actions",
-    "docker",
+    "ecr",
     "login"
   ],
   "author": "Docker",
   "contributors": [
     {
-      "name": "CrazyMax",
-      "url": "https://crazymax.dev"
+      "name": "Adam Rogas"
     }
   ],
   "license": "MIT",
@@ -30,6 +29,7 @@
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
     "@actions/io": "^1.0.2",
+    "aws-sdk": "^2.801.0",
     "semver": "^7.3.2"
   },
   "devDependencies": {
