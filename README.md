@@ -37,7 +37,7 @@ jobs:
       token: ${{ steps.ecr.outputs.token }}
     steps:
       -
-        name: Login to ECR
+        name: Get token to login to Amazon ECR
         uses: PhutureCorp/ecr-login-token-action@v0.7.0
         with:
           registry: <aws-account-number>.dkr.ecr.<region>.amazonaws.com
