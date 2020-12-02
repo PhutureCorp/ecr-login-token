@@ -1,6 +1,6 @@
 {
-  "name": "docker-login",
-  "description": "GitHub Action to login against a Docker registry",
+  "name": "ecr-login-token",
+  "description": "GitHub Action to get ecr token for Docker containers hosted at Amazon ECR",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc && ncc build",
@@ -15,14 +15,13 @@
   },
   "keywords": [
     "actions",
-    "docker",
+    "ecr",
     "login"
   ],
   "author": "Docker",
   "contributors": [
     {
-      "name": "CrazyMax",
-      "url": "https://crazymax.dev"
+      "name": "Adam Rogas"
     }
   ],
   "license": "MIT",
