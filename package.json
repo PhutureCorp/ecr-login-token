@@ -1,5 +1,5 @@
 {
-  "name": "ecr-login-token",
+  "name": "ecr-login-token-action",
   "description": "GitHub Action to get ecr token for Docker containers hosted at Amazon ECR",
   "main": "lib/main.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PhutureCorp/ecr-login-token.git"
+    "url": "git+https://github.com/PhutureCorp/ecr-login-token-action.git"
   },
   "keywords": [
     "actions",
@@ -30,7 +30,8 @@
     "@actions/exec": "^1.0.4",
     "@actions/io": "^1.0.2",
     "aws-sdk": "^2.801.0",
-    "semver": "^7.3.2"
+    "semver": "^7.3.2",
+    "webpack-bundle-analyzer": "^4.2.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.3",

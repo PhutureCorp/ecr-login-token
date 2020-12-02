@@ -1,9 +1,10 @@
 //import * as os from 'os';
-import * as core from '@actions/core';
+import { setFailed, info, setOutput } from '@actions/core/lib/core';
 import {getInputs, Inputs} from './context';
 //import * as docker from './docker';
 import * as stateHelper from './state-helper';
-import AWS, {ECR, Config, Credentials} from 'aws-sdk';
+import ECR from 'aws-sdk/clients/ecr';
+import { Credentials } from 'aws-sdk/lib/credentials';
 
 export async function run(): Promise<void> {
   try {
@@ -18,21 +19,21 @@ export async function run(): Promise<void> {
 
     var ecr = new ECR({credentials: creds, region: region});
 
-    core.info(`🔑 Getting Token...`);
+    info(`🔑 Getting Token...`);
     var token = await ecr.getAuthorizationToken({}).promise();
     var data = token.authorizationData;
     if (data) {
       const tokenData = data[0].authorizationToken as string;
       let buff = Buffer.from(tokenData, 'base64');
       let token = buff.toString('ascii').split(':')[1];
-      core.setOutput('token', token);
+      setOutput('token', token);
     }
 
     stateHelper.setRegistry(registry);
     stateHelper.setLogout(logout);
 
   } catch (error) {
-    core.setFailed(error.message);
+    setFailed(error.message);
   }
 }
 

@@ -1,17 +1,17 @@
-import * as core from '@actions/core';
+import { saveState }  from '@actions/core';
 
 export const IsPost = !!process.env['STATE_isPost'];
 export const registry = process.env['STATE_registry'] || '';
 export const logout = /true/i.test(process.env['STATE_logout'] || '');
 
 export function setRegistry(registry: string) {
-  core.saveState('registry', registry);
+  saveState('registry', registry);
 }
 
 export function setLogout(logout: string) {
-  core.saveState('logout', logout);
+  saveState('logout', logout);
 }
 
 if (!IsPost) {
-  core.saveState('isPost', 'true');
+  saveState('isPost', 'true');
 }

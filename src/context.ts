@@ -1,4 +1,4 @@
-import * as core from '@actions/core';
+import {getInput} from '@actions/core';
 
 export interface Inputs {
   registry: string;
@@ -9,9 +9,9 @@ export interface Inputs {
 
 export function getInputs(): Inputs {
   return {
-    registry: core.getInput('registry'),
-    username: core.getInput('username'),
-    password: core.getInput('password'),
-    logout: core.getInput('logout')
+    registry: getInput('registry'),
+    username: getInput('username'),
+    password: getInput('password'),
+    logout: getInput('logout')
   };
 }
