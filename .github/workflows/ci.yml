@@ -30,7 +30,7 @@ jobs:
          registry: ${{ secrets.AWS_ACCOUNT_NUMBER }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         arn: ${{ secrets.AWS_ARN }}
+         ##arn: ${{ secrets.AWS_ARN }}
      -
        name: Echo Token
        run: echo ${{ steps.ecr.outputs.token }}
