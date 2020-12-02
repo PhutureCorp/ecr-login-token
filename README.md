@@ -1,5 +1,5 @@
 [![GitHub release](https://img.shields.io/github/release/PhutureCorp/ecr-login-token-action.svg?style=flat-square)](https://github.com/PhutureCorp/get-ecr-token-action/releases/latest)
-[![GitHub marketplace](https://img.shields.io/badge/marketplace-PhutureCorp--ecr--login--token--action-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/get-ecr-token)
+[![GitHub marketplace](https://img.shields.io/badge/marketplace-PhutureCorp--ecr--login--token--action-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/ecr-login-token)
 
 ## About
 
