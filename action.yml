@@ -1,6 +1,6 @@
 # https://help.github.com/en/articles/metadata-syntax-for-github-actions
 name: 'ECR Login Token'
-description: 'GitHub Action to get ecr login via aws-sdk for node'
+description: 'GitHub Action to get ecr login token via aws-sdk for node'
 author: 'PhutureCorp'
 branding:
   icon: 'lock'
@@ -17,6 +17,9 @@ inputs:
     required: false
   password:
     description: 'Password or personal access token used to log against the Docker registry'
+    required: false
+  arn:
+    description: 'The role that must be assumed if specified'
     required: false
 
 runs:
