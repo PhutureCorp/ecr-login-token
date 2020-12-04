@@ -12,8 +12,8 @@ on:
       - published
 
 jobs:
-  if: github.event_name != 'push' || (github.event_name == 'push' && contains(toJson(github.event.commits), '***NO_CI***') == false && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false)
   ecr:
+   if: github.event_name != 'push' || (github.event_name == 'push' && contains(toJson(github.event.commits), '***NO_CI***') == false && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false)
    runs-on: ${{ matrix.os }}
    strategy:
      fail-fast: false
