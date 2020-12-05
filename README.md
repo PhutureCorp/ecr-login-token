@@ -1,6 +1,6 @@
-![ci](https://github.com/PhutureCorp/ecr-login-token-action/workflows/ci/badge.svg)
-[![GitHub release](https://img.shields.io/github/release/PhutureCorp/ecr-login-token-action.svg?style=flat-square)](https://github.com/PhutureCorp/ecr-login-token-action/releases/latest)
-[![GitHub marketplace](https://img.shields.io/badge/marketplace-PhutureCorp--ecr--login--token--action-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/ecr-login-token)
+![ci](https://github.com/PhutureCorp/ecr-login-token/workflows/ci/badge.svg)
+[![GitHub release](https://img.shields.io/github/release/PhutureCorp/ecr-login-token.svg?style=flat-square)](https://github.com/PhutureCorp/ecr-login-token/releases/latest)
+[![GitHub marketplace](https://img.shields.io/badge/marketplace-PhutureCorp--ecr--login--token-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/ecr-login-token)
 
 ## About
 
@@ -39,7 +39,7 @@ jobs:
     steps:
       -
         name: Get token to login to Amazon ECR
-        uses: PhutureCorp/ecr-login-token-action@v0.8.0
+        uses: PhutureCorp/ecr-login-token@v0.8.0
         with:
           registry: <aws-account-number>.dkr.ecr.<region>.amazonaws.com
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
