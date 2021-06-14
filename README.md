@@ -37,7 +37,7 @@ jobs:
     outputs:
       token: ${{ steps.ecr.outputs.token }}
     steps:
-      -
+      - id: ecr
         name: Get token to login to Amazon ECR
         uses: PhutureCorp/ecr-login-token@v0.8.0
         with:
