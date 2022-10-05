@@ -30,7 +30,7 @@
     "@actions/exec": "^1.0.4",
     "@actions/io": "^1.0.2",
     "aws-sdk": "^2.803.0",
-    "semver": "^7.3.4",
+    "semver": "^7.3.8",
     "webpack-bundle-analyzer": "^4.2.0"
   },
   "devDependencies": {
