@@ -31,7 +31,7 @@
     "@actions/io": "^1.0.2",
     "aws-sdk": "^2.803.0",
     "semver": "^7.3.4",
-    "webpack-bundle-analyzer": "^4.2.0"
+    "webpack-bundle-analyzer": "^4.7.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.3",
